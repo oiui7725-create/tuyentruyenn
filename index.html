@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chung Tay Đẩy Lùi Bạo Lực Học Đường</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #5b5cf0;
+      --secondary: #8b5cf6;
+      --pink: #ec4899;
+      --dark: #101329;
+      --text: #252746;
+      --white: #ffffff;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(139,92,246,.18), transparent 25%),
+        radial-gradient(circle at 90% 20%, rgba(236,72,153,.15), transparent 25%),
+        #f5f6ff;
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* =========================
+       NAVBAR
+    ========================== */
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 18px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255,255,255,.72);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid rgba(255,255,255,.5);
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .logo span {
+      color: var(--pink);
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #333652;
+      font-weight: 600;
+      transition: .3s;
+    }
+
+    nav a:hover {
+      color: var(--pink);
+    }
+
+    /* =========================
+       HERO
+    ========================== */
+
+    .hero {
+      min-height: 100vh;
+      padding: 130px 7% 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 60px;
+      position: relative;
+    }
+
+    .hero-content {
+      animation: fadeUp 1s ease;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 9px 16px;
+      border-radius: 50px;
+      background: rgba(91,92,240,.1);
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: clamp(42px, 6vw, 78px);
+      line-height: 1.05;
+      margin-bottom: 25px;
+      color: var(--dark);
+    }
+
+    .hero h1 span {
+      background: linear-gradient(90deg, var(--primary), var(--pink));
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      font-size: 19px;
+      line-height: 1.8;
+      max-width: 650px;
+      color: #5c607d;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 15px 26px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      box-shadow: 0 12px 30px rgba(91,92,240,.3);
+      transition: .3s;
+    }
+
+    .btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 35px rgba(91,92,240,.4);
+    }
+
+    /* =========================
+       3D SCENE
+    ========================== */
+
+    .scene {
+      height: 500px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      perspective: 1000px;
+    }
+
+    .cube {
+      width: 230px;
+      height: 230px;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: rotateCube 12s infinite linear;
+    }
+
+    .face {
+      position: absolute;
+      width: 230px;
+      height: 230px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 80px;
+      color: white;
+      border: 2px solid rgba(255,255,255,.35);
+      background: linear-gradient(135deg,
+        rgba(91,92,240,.85),
+        rgba(236,72,153,.75));
+      box-shadow: inset 0 0 40px rgba(255,255,255,.12);
+      backdrop-filter: blur(10px);
+    }
+
+    .front  { transform: translateZ(115px); }
+    .back   { transform: rotateY(180deg) translateZ(115px); }
+    .right  { transform: rotateY(90deg) translateZ(115px); }
+    .left   { transform: rotateY(-90deg) translateZ(115px); }
+    .top    { transform: rotateX(90deg) translateZ(115px); }
+    .bottom { transform: rotateX(-90deg) translateZ(115px); }
+
+    @keyframes rotateCube {
+      from {
+        transform: rotateX(-15deg) rotateY(0deg);
+      }
+      to {
+        transform: rotateX(-15deg) rotateY(360deg);
+      }
+    }
+
+    .floating {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(1px);
+      animation: float 5s ease-in-out infinite;
+    }
+
+    .ball1 {
+      width: 70px;
+      height: 70px;
+      background: #a78bfa;
+      top: 10%;
+      right: 5%;
+    }
+
+    .ball2 {
+      width: 45px;
+      height: 45px;
+      background: #f472b6;
+      bottom: 15%;
+      left: 10%;
+      animation-delay: 1s;
+    }
+
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-30px); }
+    }
+
+    /* =========================
+       SECTIONS
+    ========================== */
+
+    section {
+      padding: 100px 7%;
+    }
+
+    .section-title {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 55px;
+    }
+
+    .section-title h2 {
+      font-size: 42px;
+      color: var(--dark);
+      margin-bottom: 15px;
+    }
+
+    .section-title p {
+      line-height: 1.7;
+      color: #696d87;
+    }
+
+    /* =========================
+       CARDS
+    ========================== */
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+    }
+
+    .card {
+      padding: 35px;
+      border-radius: 25px;
+      background: rgba(255,255,255,.75);
+      border: 1px solid rgba(255,255,255,.8);
+      box-shadow: 0 20px 50px rgba(37,39,70,.08);
+      transition: .4s;
+      transform-style: preserve-3d;
+    }
+
+    .card:hover {
+      transform: perspective(800px) rotateX(5deg) rotateY(-5deg) translateY(-10px);
+      box-shadow: 0 30px 60px rgba(37,39,70,.15);
+    }
+
+    .icon {
+      width: 65px;
+      height: 65px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #ede9fe, #fce7f3);
+    }
+
+    .card h3 {
+      font-size: 22px;
+      margin-bottom: 12px;
+      color: var(--dark);
+    }
+
+    .card p {
+      color: #686c86;
+      line-height: 1.7;
+    }
+
+    /* =========================
+       MESSAGE
+    ========================== */
+
+    .message {
+      background: linear-gradient(135deg, #15183b, #312e81);
+      color: white;
+      border-radius: 40px;
+      padding: 70px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(30,30,80,.25);
+    }
+
+    .message::before,
+    .message::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,.08);
+    }
+
+    .message::before {
+      width: 300px;
+      height: 300px;
+      top: -150px;
+      left: -80px;
+    }
+
+    .message::after {
+      width: 250px;
+      height: 250px;
+      bottom: -130px;
+      right: -60px;
+    }
+
+    .message h2 {
+      position: relative;
+      font-size: 45px;
+      margin-bottom: 20px;
+    }
+
+    .message p {
+      position: relative;
+      max-width: 750px;
+      margin: auto;
+      line-height: 1.8;
+      color: #dfe0ff;
+      font-size: 18px;
+    }
+
+    /* =========================
+       ACTION STEPS
+    ========================== */
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 20px;
+    }
+
+    .step {
+      text-align: center;
+      padding: 30px 20px;
+    }
+
+    .number {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg,var(--primary),var(--pink));
+      color: white;
+      font-size: 25px;
+      font-weight: 800;
+      box-shadow: 0 15px 30px rgba(91,92,240,.25);
+    }
+
+    .step h3 {
+      margin-bottom: 10px;
+    }
+
+    .step p {
+      color: #70738b;
+      line-height: 1.6;
+    }
+
+    /* =========================
+       QUOTE
+    ========================== */
+
+    .quote {
+      text-align: center;
+      padding: 100px 20px;
+    }
+
+    .quote blockquote {
+      max-width: 900px;
+      margin: auto;
+      font-size: clamp(28px, 4vw, 48px);
+      line-height: 1.3;
+      font-weight: 800;
+      color: var(--dark);
+    }
+
+    .quote span {
+      color: var(--pink);
+    }
+
+    /* =========================
+       FOOTER
+    ========================== */
+
+    footer {
+      padding: 35px 7%;
+      background: #101329;
+      color: #aaaec7;
+      text-align: center;
+    }
+
+    footer strong {
+      color: white;
+    }
+
+    /* =========================
+       ANIMATION
+    ========================== */
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: 1s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================== */
+
+    @media (max-width: 900px) {
+      nav ul {
+        display: none;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .hero p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .scene {
+        height: 380px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .steps {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .message {
+        padding: 50px 25px;
+      }
+    }
+
+    @media (max-width: 550px) {
+      .hero {
+        padding-top: 120px;
+      }
+
+      .cube,
+      .face {
+        width: 170px;
+        height: 170px;
+      }
+
+      .face {
+        font-size: 60px;
+      }
+
+      .front  { transform: translateZ(85px); }
+      .back   { transform: rotateY(180deg) translateZ(85px); }
+      .right  { transform: rotateY(90deg) translateZ(85px); }
+      .left   { transform: rotateY(-90deg) translateZ(85px); }
+      .top    { transform: rotateX(90deg) translateZ(85px); }
+      .bottom { transform: rotateX(-90deg) translateZ(85px); }
+
+      .steps {
+        grid-template-columns: 1fr;
+      }
+
+      .section-title h2 {
+        font-size: 32px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <div class="logo">STOP<span>BULLYING</span></div>
+
+    <ul>
+      <li><a href="#home">Trang chủ</a></li>
+      <li><a href="#about">Vấn đề</a></li>
+      <li><a href="#action">Hành động</a></li>
+      <li><a href="#message">Thông điệp</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero" id="home">
+
+    <div class="hero-content">
+      <div class="badge">💜 CÙNG NHAU XÂY DỰNG TRƯỜNG HỌC AN TOÀN</div>
+
+      <h1>
+        Nói không với
+        <span>bạo lực học đường</span>
+      </h1>
+
+      <p>
+        Một lời nói tử tế có thể thay đổi một ngày của người khác.
+        Hãy cùng xây dựng môi trường học đường nơi mọi học sinh
+        đều được tôn trọng, lắng nghe và cảm thấy an toàn.
+      </p>
+
+      <a href="#action" class="btn">
+        Tôi muốn hành động →
+      </a>
+    </div>
+
+    <!-- 3D OBJECT -->
+    <div class="scene">
+      <div class="floating ball1"></div>
+      <div class="floating ball2"></div>
+
+      <div class="cube">
+        <div class="face front">🤝</div>
+        <div class="face back">❤️</div>
+        <div class="face right">🕊️</div>
+        <div class="face left">🌱</div>
+        <div class="face top">😊</div>
+        <div class="face bottom">⭐</div>
+      </div>
+    </div>
+
+  </header>
+
+  <!-- ABOUT -->
+  <section id="about">
+
+    <div class="section-title reveal">
+      <h2>Bạo lực học đường là gì?</h2>
+
+      <p>
+        Bạo lực học đường không chỉ là hành vi đánh nhau.
+        Đó còn có thể là những lời xúc phạm, đe dọa, cô lập,
+        bắt nạt trên mạng hoặc những hành vi khiến người khác
+        cảm thấy sợ hãi và tổn thương.
+      </p>
+    </div>
+
+    <div class="cards">
+
+      <div class="card reveal">
+        <div class="icon">👊</div>
+        <h3>Bạo lực thể chất</h3>
+        <p>
+          Đánh, đẩy, đá hoặc sử dụng hành động thể chất
+          để gây tổn thương cho người khác.
+        </p>
+      </div>
+
+      <div class="card reveal">
+        <div class="icon">💬</div>
+        <h3>Bạo lực tinh thần</h3>
+        <p>
+          Chửi mắng, chế giễu, đe dọa, xúc phạm hoặc cố tình
+          làm người khác cảm thấy bị hạ thấp.
+        </p>
+      </div>
+
+      <div class="card reveal">
+        <div class="icon">📱</div>
+        <h3>Bắt nạt trên mạng</h3>
+        <p>
+          Đăng tải nội dung xúc phạm, lan truyền tin nhắn,
+          hình ảnh hoặc thông tin nhằm làm tổn thương người khác.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MESSAGE -->
+  <section id="message">
+
+    <div class="message reveal">
+
+      <h2>Im lặng không phải là giải pháp</h2>
+
+      <p>
+        Nếu bạn chứng kiến hoặc đang trải qua bạo lực học đường,
+        hãy tìm đến một người lớn đáng tin cậy như cha mẹ,
+        giáo viên, cố vấn học đường hoặc người có trách nhiệm.
+        Lên tiếng để tìm kiếm sự giúp đỡ là một hành động dũng cảm.
+      </p>
+
+    </div>
+
+  </section>
+
+  <!-- ACTION -->
+  <section id="action">
+
+    <div class="section-title reveal">
+
+      <h2>4 điều chúng ta có thể làm</h2>
+
+      <p>
+        Mỗi người đều có thể góp phần tạo nên một môi trường
+        học đường tích cực hơn.
+      </p>
+
+    </div>
+
+    <div class="steps">
+
+      <div class="step reveal">
+        <div class="number">01</div>
+        <h3>Tôn trọng</h3>
+        <p>
+          Tôn trọng sự khác biệt về ngoại hình,
+          hoàn cảnh, tính cách và quan điểm.
+        </p>
+      </div>
+
+      <div class="step reveal">
+        <div class="number">02</div>
+        <h3>Lắng nghe</h3>
+        <p>
+          Lắng nghe khi một người bạn đang gặp khó khăn
+          thay vì phán xét họ.
+        </p>
+      </div>
+
+      <div class="step reveal">
+        <div class="number">03</div>
+        <h3>Lên tiếng</h3>
+        <p>
+          Báo cho giáo viên hoặc người lớn đáng tin cậy
+          khi nhận thấy hành vi bắt nạt hoặc bạo lực.
+        </p>
+      </div>
+
+      <div class="step reveal">
+        <div class="number">04</div>
+        <h3>Giúp đỡ</h3>
+        <p>
+          Đồng hành cùng bạn bè và khuyến khích họ
+          tìm kiếm sự hỗ trợ phù hợp.
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- QUOTE -->
+  <section class="quote reveal">
+
+    <blockquote>
+      “Một ngôi trường tốt đẹp bắt đầu từ
+      <span>những hành động tử tế</span>
+      của mỗi chúng ta.”
+    </blockquote>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>
+      <strong>STOP BULLYING</strong> —
+      Chung tay xây dựng môi trường học đường
+      an toàn, thân thiện và tôn trọng.
+    </p>
+  </footer>
+
+  <!-- JAVASCRIPT -->
+  <script>
+
+    // Hiệu ứng xuất hiện khi cuộn trang
+    const reveals = document.querySelectorAll(".reveal");
+
+    function revealOnScroll() {
+      reveals.forEach(element => {
+        const windowHeight = window.innerHeight;
+        const elementTop = element.getBoundingClientRect().top;
+
+        if (elementTop < windowHeight - 80) {
+          element.classList.add("active");
+        }
+      });
+    }
+
+    window.addEventListener("scroll", revealOnScroll);
+    revealOnScroll();
+
+
+    // Hiệu ứng 3D theo chuột
+    const cube = document.querySelector(".cube");
+    const scene = document.querySelector(".scene");
+
+    scene.addEventListener("mousemove", (event) => {
+
+      const rect = scene.getBoundingClientRect();
+
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      const rotateY = (x - centerX) / 18;
+      const rotateX = (centerY - y) / 18;
+
+      cube.style.animation = "none";
+
+      cube.style.transform =
+        `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    });
+
+    scene.addEventListener("mouseleave", () => {
+      cube.style.animation = "rotateCube 12s infinite linear";
+    });
+
+  </script>
+
+</body>
+</html>
